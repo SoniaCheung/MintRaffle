@@ -25,7 +25,8 @@ func NewRouters(engine *xorm.Engine) (*gin.Engine, error) {
 
 	// Submission related routes
 	submissionController := submissioncontroller.NewSubmissionController(engine)
-	router.POST("submissions", submissionController.PostSubmission)
+	router.GET("/submissions", submissionController.GetSubmissions)
+	router.POST("/submissions", submissionController.PostSubmission)
 
 	return router, nil
 }

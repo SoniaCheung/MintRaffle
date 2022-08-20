@@ -73,3 +73,37 @@ func (s *SubmissionController) PostSubmission(ctx *gin.Context) {
 	rsp.Submission = submission
 	api.ResponseJSON(ctx, nil, rsp)
 }
+
+func (s *SubmissionController) GetSubmissions(ctx *gin.Context) {
+	req := requests.GetSubmissionsReq{}
+	rsp := responses.GetSubmissionsRsp{}
+	var err error
+
+	if err = ctx.BindQuery(&req); err != nil {
+		api.ResponseJSON(ctx, err, nil)
+		return
+	}
+
+	session := s.Engine.NewSession()
+	defer session.Close()
+
+	var submission models.Submission
+
+	if req.ProjectId > 0 && req.WalletAddress != "" {
+		exist, err := session.Table(submission.TableName()).Where("project_id = ? AND wallet_address = ?", req.ProjectId, req.WalletAddress).Get(&submission)
+		if !exist {
+			api.ResponseJSON(ctx, errors.New("submission does not exist"), nil)
+			return
+		}
+		if err != nil {
+			api.ResponseJSON(ctx, err, nil)
+			return
+		}
+	} else {
+		api.ResponseJSON(ctx, errors.New("invalid query parameters"), nil)
+		return
+	}
+
+	rsp.Submission = submission
+	api.ResponseJSON(ctx, nil, rsp)
+}
