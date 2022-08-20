@@ -1,8 +1,13 @@
 package app
 
-import "github.com/gin-gonic/gin"
+import (
+	projectcontroller "soniacheung/mint-raffle/cmd/mint-raffle/app/controllers/project_controller"
 
-func NewRouters() (*gin.Engine, error) {
+	"github.com/gin-gonic/gin"
+	"github.com/go-xorm/xorm"
+)
+
+func NewRouters(engine *xorm.Engine) (*gin.Engine, error) {
 	router := gin.Default()
 	router.Use(gin.Recovery())
 
@@ -10,5 +15,9 @@ func NewRouters() (*gin.Engine, error) {
 		ctx.JSON(200, nil)
 	})
 
+	// Project related routes
+	projectController := projectcontroller.NewProjectController(engine)
+
+	router.GET("/projects", projectController.GetProjects)
 	return router, nil
 }

@@ -25,7 +25,7 @@ func main() {
 
 	fmt.Println("MySQL DB connection established")
 
-	routers, err := app.NewRouters()
+	routers, err := app.NewRouters(engine)
 	if err != nil {
 		logrus.Fatalf("Create routers: %v", err)
 	}
