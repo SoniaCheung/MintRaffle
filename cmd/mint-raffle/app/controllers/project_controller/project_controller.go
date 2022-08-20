@@ -6,6 +6,7 @@ import (
 	"soniacheung/mint-raffle/cmd/mint-raffle/app/requests"
 	"soniacheung/mint-raffle/cmd/mint-raffle/app/responses"
 	"soniacheung/mint-raffle/pkg/api"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-xorm/xorm"
@@ -81,6 +82,39 @@ func (p *ProjectController) GetProjectById(ctx *gin.Context) {
 	}
 
 	if err != nil {
+		api.ResponseJSON(ctx, err, nil)
+		return
+	}
+
+	rsp.Project = project
+	api.ResponseJSON(ctx, nil, rsp)
+}
+
+func (p *ProjectController) PostProject(ctx *gin.Context) {
+	req := requests.PostProjectReq{}
+	rsp := responses.PostProjectRsp{}
+	var err error
+
+	if err = ctx.Bind(&req); err != nil {
+		api.ResponseJSON(ctx, err, nil)
+		return
+	}
+
+	session := p.Engine.NewSession()
+	defer session.Close()
+
+	project := models.Project{
+		Name:        req.Name,
+		Description: req.Description,
+		OfficalLink: req.OfficalLink,
+		MaxWinner:   req.MaxWinner,
+		DueTime:     req.DueTime,
+		Status:      models.ProjectStatusOpening,
+		CreatedAt:   time.Now(),
+		UpdatedAt:   time.Now(),
+	}
+
+	if _, err = session.Table(project.TableName()).Insert(&project); err != nil {
 		api.ResponseJSON(ctx, err, nil)
 		return
 	}

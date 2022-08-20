@@ -20,5 +20,6 @@ func NewRouters(engine *xorm.Engine) (*gin.Engine, error) {
 
 	router.GET("/projects", projectController.GetProjects)
 	router.GET("/projects/:id", projectController.GetProjectById)
+	router.POST("/projects", projectController.PostProject)
 	return router, nil
 }

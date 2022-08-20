@@ -9,3 +9,7 @@ type GetProjectsRsp struct {
 type GetProjectByIdRsp struct {
 	Project models.Project `json:"project"`
 }
+
+type PostProjectRsp struct {
+	Project models.Project `json:"project"`
+}
