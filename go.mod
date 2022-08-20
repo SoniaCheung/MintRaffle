@@ -4,6 +4,8 @@ go 1.18
 
 require (
 	github.com/gin-gonic/gin v1.8.1
+	github.com/go-sql-driver/mysql v1.4.1
+	github.com/go-xorm/xorm v0.7.9
 	github.com/sirupsen/logrus v1.9.0
 )
 
@@ -24,6 +26,9 @@ require (
 	golang.org/x/net v0.0.0-20210226172049-e18ecbb05110 // indirect
 	golang.org/x/sys v0.0.0-20220715151400-c0bba94af5f8 // indirect
 	golang.org/x/text v0.3.6 // indirect
+	google.golang.org/appengine v1.6.0 // indirect
 	google.golang.org/protobuf v1.28.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
+	xorm.io/builder v0.3.6 // indirect
+	xorm.io/core v0.7.2-0.20190928055935-90aeac8d08eb // indirect
 )
