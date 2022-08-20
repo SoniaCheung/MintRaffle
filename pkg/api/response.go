@@ -21,7 +21,7 @@ func ResponseJSON(ctx *gin.Context, err error, data interface{}) {
 	} else {
 		logrus.Error("%s response error: %s", ctx.Request.URL, err)
 		ctx.JSON(http.StatusBadRequest, &Response{
-			Error: fmt.Sprintf("Internal Server Error: %s", err),
+			Error: fmt.Sprintf("Error: %s", err),
 		})
 	}
 }

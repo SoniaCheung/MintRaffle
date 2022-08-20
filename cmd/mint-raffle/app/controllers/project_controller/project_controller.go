@@ -59,3 +59,32 @@ func (p *ProjectController) GetProjects(ctx *gin.Context) {
 	rsp.Projects = projects
 	api.ResponseJSON(ctx, nil, rsp)
 }
+
+func (p *ProjectController) GetProjectById(ctx *gin.Context) {
+	req := requests.GetProjectByIdReq{}
+	rsp := responses.GetProjectByIdRsp{}
+	var err error
+
+	if err = ctx.BindUri(&req); err != nil {
+		api.ResponseJSON(ctx, err, nil)
+		return
+	}
+
+	session := p.Engine.NewSession()
+	defer session.Close()
+
+	var project models.Project
+	ok, err := session.Table(project.TableName()).ID(req.Id).Get(&project)
+	if !ok {
+		api.ResponseJSON(ctx, errors.New("cannot find project"), nil)
+		return
+	}
+
+	if err != nil {
+		api.ResponseJSON(ctx, err, nil)
+		return
+	}
+
+	rsp.Project = project
+	api.ResponseJSON(ctx, nil, rsp)
+}

@@ -19,5 +19,6 @@ func NewRouters(engine *xorm.Engine) (*gin.Engine, error) {
 	projectController := projectcontroller.NewProjectController(engine)
 
 	router.GET("/projects", projectController.GetProjects)
+	router.GET("/projects/:id", projectController.GetProjectById)
 	return router, nil
 }
