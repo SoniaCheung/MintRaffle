@@ -34,9 +34,15 @@ CREATE TABLE `submissions` (
 
 Go:
 - install go
-- clone the project then run go mod tidy
-- to start up the RESTful API server:
+- clone the project then run `go mod tidy`
+- to start up the RESTful API server(localhost:8080):
   `go run cmd/mint-raffle/mint-raffle.go`
+  
 - to run the raffle script:
   `go run cmd/raffle/raffle.go`
   
+future improvements:
+- dockerize the project
+- project config should be export to a seperated file or environment variables
+- should expoer a schema file and included in the project
+- add test cases
