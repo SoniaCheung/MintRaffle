@@ -43,6 +43,7 @@ Go:
   
 future improvements:
 - dockerize the project
+- add CI/CD
 - project config should be export to a seperated file or environment variables
 - should expoer a schema file and included in the project
 - add test cases
